@@ -2,15 +2,21 @@ const faceMoves = ["U","D","L","R","F","B"];
 const wideMoves = ["Uw","Rw","Fw"];
 const suffixes  = ["", "'", "2"];
 
-// グループ判定
+// グループ
 function getGroup(move){
   if (move === "R" || move === "L") return 1;
   if (move === "U" || move === "D") return 2;
   if (move === "F" || move === "B") return 3;
+
+  // wideはbaseに寄せる
+  if (move.startsWith("Rw")) return 1;
+  if (move.startsWith("Uw")) return 2;
+  if (move.startsWith("Fw")) return 3;
+
   return 0;
 }
 
-// face move生成
+// face move
 function randomFaceMove(last1, last2){
   let move;
   while (true){
@@ -29,12 +35,30 @@ function randomFaceMove(last1, last2){
   return move + suffix;
 }
 
-// 単一スクランブル
+// wide move（連続・同グループNG）
+function randomWide(lastWide){
+  let move;
+  while (true){
+    move = wideMoves[Math.floor(Math.random() * wideMoves.length)];
+
+    if (lastWide && getGroup(move) === getGroup(lastWide)) {
+      continue;
+    }
+    break;
+  }
+
+  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+  return move + suffix;
+}
+
+// 単一
 function makeScramble(){
   let scramble = [];
   let last1 = null;
   let last2 = null;
+  let lastWide = null;
 
+  // 前半 18〜22
   const faceCount = 18 + Math.floor(Math.random() * 5);
   for (let i = 0; i < faceCount; i++){
     const mv = randomFaceMove(last1, last2);
@@ -44,15 +68,17 @@ function makeScramble(){
     last1 = mv.replace(/['2]$/, "");
   }
 
+  // 後半 wide 0〜2
   const wideCount = Math.floor(Math.random() * 3);
   for (let i = 0; i < wideCount; i++){
-    const w = wideMoves[Math.floor(Math.random() * wideMoves.length)];
-    const s = suffixes[Math.floor(Math.random() * suffixes.length)];
-    scramble.push(w + s);
+    const w = randomWide(lastWide);
+    scramble.push(w);
+
+    lastWide = w.replace(/['2]$/, "");
   }
 
   return scramble.join(" ");
 }
 
-// 初期化 & 公開
+// 公開
 window.makeScramble = makeScramble;
