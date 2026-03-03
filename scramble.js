@@ -63,3 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 初回生成
 generateScramble();
+
+//　呼び出し可能関数
+window.makeScramble = makeScramble;
