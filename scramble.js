@@ -62,4 +62,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //　呼び出し可能関数
-window.makeScramble = makeScramble;
+window.makeScramble = generateScramble();
