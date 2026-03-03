@@ -2,18 +2,25 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>2段階スクランブル</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    #scramble { font-size: 22px; margin-bottom: 20px; }
+    #scrambleList { font-size: 20px; margin-top: 20px; }
     button { padding: 10px 20px; }
+    input { width: 60px; padding: 5px; }
   </style>
 </head>
 <body>
 
-  <div id="scramble"></div>
-  <button id="gen">New Scramble</button>
+  <div>
+    <button id="gen">New Scramble</button>
+    <input id="count" type="number" min="1" value="1">
+  </div>
+
+  <div id="scrambleList"></div>
 
   <script src="scramble.js"></script>
+  <script src="generate.js"></script>
 </body>
 </html>
