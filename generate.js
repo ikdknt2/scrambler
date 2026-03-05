@@ -1,6 +1,6 @@
 // 複数回スクランブルを生成して表示する
 function generateManyScrambles(){
-  const count = Math.max(1, parseInt(document.getElementById("count").value) || 1);
+  const count = Math.max(1, parseInt(document.getElementById("scrambleCount").value) || 1);
   const list = document.getElementById("scrambleList");
 
   let html = "";
