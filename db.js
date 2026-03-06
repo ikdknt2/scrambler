@@ -109,7 +109,7 @@ function loadTimes(){
 
         document.getElementById("timeList").innerHTML = out;
     };
-}
+
 }
 
 function showInfo(id){
