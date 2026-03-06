@@ -15,13 +15,28 @@ request.onsuccess = function(e){
 function saveTime(){
 
     const time = parseFloat(document.getElementById("timeInput").value);
+    const solved = parseInt(document.getElementById("solvedInput").value);
+    const attempted = parseInt(document.getElementById("attemptedInput").value);
 
     const tx = db.transaction("times","readwrite");
     const store = tx.objectStore("times");
 
-    store.add({time:time});
+    store.add({
+        time:time,
+        solved:solved,
+        attempted:attempted
+    });
 
-    tx.oncomplete = loadTimes;
+    tx.oncomplete = function(){
+
+        loadTimes();
+
+        // 入力欄クリア
+        document.getElementById("timeInput").value = "";
+        document.getElementById("solvedInput").value = "";
+        document.getElementById("attemptedInput").value = "";
+
+    };
 }
 
 function loadTimes(){
@@ -41,7 +56,8 @@ function loadTimes(){
 
             out += `
             <div>
-            ${data[i].time}
+            ${data[i].solved} / ${data[i].attempted}
+            [${data[i].time}]
             <button onclick="deleteTime(${data[i].id})">❌</button>
             </div>
             `;
@@ -53,7 +69,7 @@ function loadTimes(){
 
 function deleteTime(id){
 
-    if(!confirm("このタイムを削除しますか？")){
+    if(!confirm("この結果を削除しますか？")){
         return;
     }
 
