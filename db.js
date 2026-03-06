@@ -101,16 +101,23 @@ function loadTimes(){
         for(let i=data.length-1;i>=0;i--){
 
             const point = 2 * data[i].solved - data[i].attempted;
+    
+            let timeText;
 
-            out += `
-            <div>
-            ${data[i].solved} / ${data[i].attempted} [${formatTime(data[i].time)}]
-            <button onclick="showInfo(${data[i].id})">...</button>
-            <button onclick="deleteTime(${data[i].id})">❌</button>
-            </div>
-            `;
+            if(point <= 1){
+            timeText = "DNF(" + point + ")";
+            }else{
+            timeText = formatTime(data[i].time);
         }
 
+    out += `
+    <div>
+    ${data[i].solved} / ${data[i].attempted} [${timeText}]
+    <button onclick="showInfo(${data[i].id})">...</button>
+    <button onclick="deleteTime(${data[i].id})">❌</button>
+    </div>
+    `;
+}
         document.getElementById("timeList").innerHTML = out;
     };
 
