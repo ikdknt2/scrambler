@@ -145,7 +145,6 @@ function showInfo(id){
 
     };
 }
-}
 
 function deleteTime(id){
 
