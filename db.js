@@ -41,6 +41,19 @@ function saveTime(){
     const baseTime = parseTime(document.getElementById("timeInput").value);
     const solved = parseInt(document.getElementById("solvedInput").value);
     const attempted = parseInt(document.getElementById("attemptedInput").value);
+    const penalty = parseInt(document.getElementById("penaltyInput").value) || 0;
+
+    if(solved > attempted){
+        alert("Solved cannot exceed Attempted");
+        return;
+    }
+
+    if(penalty > solved){
+        alert("Penalty cannot exceed Solved");
+        return;
+    }
+
+    const time = baseTime + penalty * 2;
 
     const point = solved - (attempted - solved);
 
@@ -50,11 +63,12 @@ function saveTime(){
     const store = tx.objectStore("times");
 
     store.add({
-        time:time,
-        solved:solved,
-        attempted:attempted,
-        point:point,
-        date:now.toISOString()
+        time: time,
+        solved: solved,
+        attempted: attempted,
+        penalty: penalty,
+        point: point,
+        date: now.toISOString()
     });
 
     tx.oncomplete = function(){
@@ -64,6 +78,7 @@ function saveTime(){
         document.getElementById("timeInput").value="";
         document.getElementById("solvedInput").value="";
         document.getElementById("attemptedInput").value="";
+        document.getElementById("penaltyInput").value="0";
     };
 }
 
