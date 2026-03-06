@@ -126,7 +126,6 @@ function showInfo(time) {
     "Point: " + point
   );
 }
-}
 
 function deleteTime(id){
 
